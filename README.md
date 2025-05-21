@@ -70,13 +70,17 @@ NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY=<your-publishable-client-key>
 STACK_SECRET_SERVER_KEY=<your-secret-server-key>
 ```
 
-7. Run the development server:
+7. Enabling Integrations via [OpenInt](https://openint.dev) [Optional]
+
+Go to the [OpenInt Console](https://openint.dev), create a new project and configure any desired integrations. You can enable integrations by setting the `OPENINT_API_KEY` environment variable in your `.env` file.
+
+8. Run the development server:
 
    ```bash
    npm run dev
    ```
 
-8. Open [http://localhost:3000](http://localhost:3000) in your browser.
+9. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Deployment
 
