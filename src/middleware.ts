@@ -1,6 +1,5 @@
+import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
-
 // Simple UUID v4 implementation without dependencies
 function generateUUID() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -12,14 +11,14 @@ function generateUUID() {
 
 // TODO: replace this with the upcoming stack auth anonymous user and transition existing cookies to it. 
 // https://github.com/stack-auth/stack-auth/issues/639
-export function middleware(req: NextRequest) {
+export async function middleware(req: Request) {
   const COOKIE_NAME = 'anonId';
-  const existing = req.cookies.get(COOKIE_NAME)?.value;
-  const res = NextResponse.next();
+  const cookieStore = await cookies();
+  const existing = cookieStore.get(COOKIE_NAME)?.value;
 
   if (!existing) {
     // generate and persist for 1 year
-    res.cookies.set(COOKIE_NAME, generateUUID(), {
+    cookieStore.set(COOKIE_NAME, generateUUID(), {
       path: '/',
       maxAge: 60 * 60 * 24 * 365,
       sameSite: 'lax',
@@ -27,14 +26,15 @@ export function middleware(req: NextRequest) {
     });
   } else {
     // extend existing cookie for 1 year
-    res.cookies.set(COOKIE_NAME, existing, {
+    cookieStore.set(COOKIE_NAME, existing, {
       path: '/',
       maxAge: 60 * 60 * 24 * 365,
       sameSite: 'lax',
       secure: process.env.NODE_ENV === 'production',
     });
   }
-  return res;
+  
+  return NextResponse.next();
 }
 
 // Define paths middleware should run on
