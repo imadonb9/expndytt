@@ -16,6 +16,7 @@ export const appsTable = pgTable("apps", {
   gitRepo: text("git_repo").notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   baseId: text("base_id").notNull().default("nextjs-dkjfgdf"),
+  previewDomain: text("preview_domain").unique(),
 });
 
 export const appPermissions = pgEnum("app_user_permission", [
@@ -28,7 +29,7 @@ export const appUsers = pgTable("app_users", {
   userId: text("user_id").notNull(),
   appId: uuid("app_id")
     .notNull()
-    .references(() => appsTable.id),
+    .references(() => appsTable.id, { onDelete: "cascade" }),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   permissions: appPermissions("permissions"),
   freestyleIdentity: text("freestyle_identity").notNull(),
@@ -48,18 +49,8 @@ export const messagesTable = pgTable("messages", {
 export const appDeployments = pgTable("app_deployments", {
   appId: uuid("app_id")
     .notNull()
-    .references(() => appsTable.id),
+    .references(() => appsTable.id, { onDelete: "cascade" }),
   createdAt: timestamp("created_at").notNull().defaultNow(),
-  deploymentUrl: text("deployment_url").notNull().primaryKey(),
   deploymentId: text("deployment_id").notNull(),
   commit: text("commit").notNull(), // sha of the commit
-});
-
-export const appDomains = pgTable("app_domains", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  appId: uuid("app_id")
-    .notNull()
-    .references(() => appsTable.id),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  domain: text("domain").notNull(),
 });

@@ -1,11 +1,10 @@
 # Adorable
 
-Open-source version of [Lovable](https://lovable.dev) - an AI agent that can write and edit code through a chat interface.
+Open-source version of **Lovable** - an AI agent that can make websites and apps through a chat interface.
 
 ## Features
 
 - Chat interface for interacting with AI code assistants
-- Agent system based on OpenAI codex
 - Patch-based code editing with user approval
 - Git integration for version control
 - Preview capabilities for code changes
@@ -70,17 +69,27 @@ NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY=<your-publishable-client-key>
 STACK_SECRET_SERVER_KEY=<your-secret-server-key>
 ```
 
-7. Enabling Integrations via [OpenInt](https://openint.dev) [Optional]
+7. Enabling Integrations via [OpenInt](https://openint.dev) (optional)
 
 Go to the [OpenInt Console](https://openint.dev), create a new project and configure any desired integrations. You can enable integrations by setting the `OPENINT_API_KEY` environment variable in your `.env` file.
 
-8. Run the development server:
+8. Add a Preview Domain (optional)
+
+Go to the [Freestyle dashboard](https://admin.freestyle.sh/dashboard/domains) and verify a new domain. Then follow the [DNS Instructions](https://docs.freestyle.sh/Getting-Started/deploy-to-custom-domain#all-subdomains-of-a-domain) to point your domain to Freestyle.
+
+Finally, add the following environment variable to your `.env` file:
+
+```env
+PREVIEW_DOMAIN=<your-domain> # formatted like adorable.app
+```
+
+9. Run the development server:
 
    ```bash
    npm run dev
    ```
 
-9. Open [http://localhost:3000](http://localhost:3000) in your browser.
+10. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Deployment
 
