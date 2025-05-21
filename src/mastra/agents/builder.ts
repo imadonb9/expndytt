@@ -4,6 +4,7 @@ import { Agent } from "@mastra/core/agent";
 import { Memory } from "@mastra/memory";
 // import { TokenLimiter, ToolCallFilter } from "@mastra/memory/processors";
 import { PostgresStore, PgVector } from "@mastra/pg";
+import Openint from "@openint/sdk";
 
 export const memory = new Memory({
   options: {
@@ -31,9 +32,17 @@ export const memory = new Memory({
   ],
 });
 
-export const builderAgent = new Agent({
-  name: "BuilderAgent",
-  model: anthropic("claude-3-7-sonnet-20250219"),
-  instructions: SYSTEM_MESSAGE,
-  memory,
-});
+export const getBuilderAgent = async (anonId?: string) => {
+  // QQ: should we use_environment_variables: true for generation? 
+  const openint = new Openint({token: process.env.OPENINT_API_KEY!, 
+    // baseURL: 'http://localhost:4000/api/v1'
+    });
+  
+  const integrationsMessage = anonId ? ((await openint.getMessageTemplate({customer_id: anonId})).template) : "";
+  return new Agent({
+    name: "BuilderAgent",
+    model: anthropic("claude-3-7-sonnet-20250219"),
+    instructions: SYSTEM_MESSAGE + (anonId ? `\n\n${integrationsMessage}` : ""),
+    memory,
+  })
+};
