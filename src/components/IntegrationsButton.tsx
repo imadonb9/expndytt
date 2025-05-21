@@ -47,6 +47,10 @@ export function IntegrationsButton({
   }, [token, fetchToken]);
 
   if (!token) {
+    // if the backend does not return a token its most likely because an OPENINT_API_KEY is not set, so don't render the button
+    console.warn(
+      "No token returned from backend, not rendering integrations button"
+    );
     return null;
   }
 

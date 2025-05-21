@@ -7,6 +7,13 @@ export async function POST(req: Request) {
   const cookieStore = await cookies();
   const anonId = cookieStore.get(COOKIE_NAME)?.value;
 
+  // the backend will not return a token if the OPENINT_API_KEY is not set, making the <IntegrationsButton /> component render null
+  if (!process.env.OPENINT_API_KEY) {
+    return new Response(JSON.stringify({
+      token: null,
+    }), { status: 200 });
+  }
+
   if (!anonId) {
     return new Response("Integration Button requires an anonId cookie to be set", { status: 401 });
   }
@@ -16,10 +23,7 @@ export async function POST(req: Request) {
   });
   
   try {
-    // note this API is bring upgraded shortly in a backwards compatible way to create tokens that are more appropriate for code generation
   const {token} = await openint.createToken(anonId, {});
-
-  console.log("Openint token created", token);
 
   return new Response(JSON.stringify({
     token,
