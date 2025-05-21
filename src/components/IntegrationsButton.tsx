@@ -82,7 +82,7 @@ export function IntegrationsButton({
         token={token}
         text={mode === "start" ? "Integrations" : "Manage Integrations"}
         buttonStyle={manageStyles as any}
-        className={className + (mode === "manage" ? " m-2" : "")}
+        className={className + (mode === "manage" ? " mb-2" : "")}
         // baseURL="http://localhost:4000/connect"
       />
     </div>

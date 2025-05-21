@@ -20,7 +20,7 @@
     "@mastra/memory": "^0.3.1",
     "@mastra/pg": "^0.3.1",
     "@modelcontextprotocol/sdk": "^1.10.1",
-    "@openint/connect": "1.0.25",
+    "@openint/connect": "1.0.26",
     "@openint/sdk": "~2.2.0",
     "@neondatabase/serverless": "^1.0.0",
     "@radix-ui/react-dialog": "^1.1.13",
