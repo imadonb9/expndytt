@@ -6,7 +6,7 @@ import { useEffect, useState, useCallback } from "react";
 export function IntegrationsButton({
   buttonStyle = {},
   className,
-  mode = "manage",
+  mode = "start",
 }: {
   className?: string;
   buttonStyle?: React.CSSProperties;
