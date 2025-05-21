@@ -14,6 +14,7 @@ import { ModeToggle } from "@/components/theme-provider";
 import { UserApps } from "@/components/user-apps";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { TypingAnimation } from "@/components/TypingAnimation";
+import { IntegrationsButton } from "@/components/IntegrationsButton";
 
 const queryClient = new QueryClient();
 
@@ -72,10 +73,13 @@ export default function Home() {
                   <div className="w-full bg-accent rounded-md relative z-10 border transition-colors">
                     <PromptInput
                       leftSlot={
-                        <FrameworkSelector
-                          value={framework}
-                          onChange={setFramework}
-                        />
+                        <div className="flex flex-row items-center justify-center gap-2">
+                          <FrameworkSelector
+                            value={framework}
+                            onChange={setFramework}
+                          />
+                          <IntegrationsButton />
+                        </div>
                       }
                       isLoading={isLoading}
                       value={prompt}
