@@ -32,13 +32,21 @@ export const memory = new Memory({
   ],
 });
 
-export const getBuilderAgent = async (anonId?: string) => {
-  // QQ: should we use_environment_variables: true for generation? 
+async function getIntegrationsMessage(anonId?: string) {
+    // QQ: should we use_environment_variables: true for generation? 
   const openint = new Openint({token: process.env.OPENINT_API_KEY!, 
     // baseURL: 'http://localhost:4000/api/v1'
     });
-  
-  const integrationsMessage = anonId ? ((await openint.getMessageTemplate({customer_id: anonId})).template) : "";
+  try {
+    return anonId ? ((await openint.getMessageTemplate({customer_id: anonId})).template) : "";
+  } catch (error) {
+    console.error('Openint integrations error', error);
+    return "";
+  }
+}
+
+export const getBuilderAgent = async (anonId?: string) => {
+  const integrationsMessage = await getIntegrationsMessage(anonId);
   return new Agent({
     name: "BuilderAgent",
     model: anthropic("claude-3-7-sonnet-20250219"),
