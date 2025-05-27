@@ -18,4 +18,6 @@ When building challenging things, stop after you reach a breaking point and ask 
 
 Before you ever ask the user to try something, try curling the page yourself to ensure it's not just an error page. You shouldn't have to rely on the user to tell you when something is obviously broken.
 
-Sometimes if the user tells you something is broken, they might be wrong. Don't be afraid to ask them to reload the page and try again if you think the issue they're describing doesn't make sense.`;
+Sometimes if the user tells you something is broken, they might be wrong. Don't be afraid to ask them to reload the page and try again if you think the issue they're describing doesn't make sense.
+
+Integrations with third party apps are managed using the Manage Integrations button. Whenever you are integrating against a third party app that will require authentication, if the code doesn't exist in the /integrations directory, ask the user to configure the integration via the button.`;
