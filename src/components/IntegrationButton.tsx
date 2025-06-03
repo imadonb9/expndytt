@@ -3,7 +3,13 @@
 import { ConnectButton } from "@openint/connect";
 import { useEffect, useState } from "react";
 
-export function IntegrationsButton({ className }: { className?: string }) {
+export function IntegrationsButton({
+  className,
+  onPrompt,
+}: {
+  className?: string;
+  onPrompt: (prompt: string) => void;
+}) {
   const [token, setToken] = useState<string | null>();
 
   useEffect(() => {
@@ -34,15 +40,7 @@ export function IntegrationsButton({ className }: { className?: string }) {
 
   return (
     <div>
-      <p
-        style={{
-          marginBottom: "0.5rem",
-          fontSize: "1rem", // Increased font size
-          color: "#4b5563", // Darker gray text color
-        }}
-      >
-        Suggestions
-      </p>
+      <p className="mb-2 text-base text-gray-600">Suggestions</p>
       <ConnectButton
         token={token}
         text={"Manage Integrations"}
@@ -54,8 +52,15 @@ export function IntegrationsButton({ className }: { className?: string }) {
             backgroundColor: "white", // Set background to white
           } as any
         }
+        onEvent={(event) => {
+          if (event.name === "connect.connection-connected") {
+            const prompt = event?.prompt;
+            if (prompt) {
+              onPrompt(prompt);
+            }
+          }
+        }}
         className={className + " mb-2"}
-        // baseURL="http://localhost:4000/connect"
       />
     </div>
   );

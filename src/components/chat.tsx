@@ -80,7 +80,11 @@ export default function Chat(props: {
         </ChatContainer>
       </div>
       <div className="p-3 transition-all bg-background backdrop-blur-sm z-10">
-        <IntegrationsButton />
+        <IntegrationsButton
+          onPrompt={(prompt: string) => {
+            append({ content: prompt, role: "system" });
+          }}
+        />
         <PromptInputBasic
           input={input || ""}
           onSubmit={onSubmit}
