@@ -9,14 +9,21 @@ export async function POST(req: Request) {
       token: null,
     }), { status: 200 });
   }
-  const {userId} = await getUser();
+
+  const { appId } = await req.json();
+  if(!appId) {
+    console.error("No appId provided, skipping rendering Integrations Button");
+    return new Response(JSON.stringify({
+      token: null,
+    }), { status: 200 });
+  }
 
   const openint = new Openint({
     token: process.env.OPENINT_API_KEY,
   });
 
   try {
-  const {token} = await openint.createToken(userId, {});
+  const {token} = await openint.createToken(appId, {});
 
   return new Response(JSON.stringify({
     token,

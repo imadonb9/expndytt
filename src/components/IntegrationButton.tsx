@@ -6,9 +6,11 @@ import { useEffect, useState } from "react";
 export function IntegrationsButton({
   className,
   onPrompt,
+  appId,
 }: {
   className?: string;
   onPrompt: (prompt: string) => void;
+  appId: string;
 }) {
   const [token, setToken] = useState<string | null>();
 
@@ -17,6 +19,7 @@ export function IntegrationsButton({
       try {
         const res = await fetch("/api/integration", {
           method: "POST",
+          body: JSON.stringify({ appId }),
         });
         const data = await res.json();
         if (data.token) {
@@ -48,8 +51,8 @@ export function IntegrationsButton({
           {
             borderRadius: "9999px",
             padding: "0.5rem 1rem",
-            border: "none", // Remove border
-            backgroundColor: "white", // Set background to white
+            border: "none",
+            backgroundColor: "white",
           } as any
         }
         onEvent={(event) => {

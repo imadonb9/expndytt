@@ -81,6 +81,7 @@ export default function Chat(props: {
       </div>
       <div className="p-3 transition-all bg-background backdrop-blur-sm z-10">
         <IntegrationsButton
+          appId={props.appId}
           onPrompt={(prompt: string) => {
             append({ content: prompt, role: "system" });
           }}
