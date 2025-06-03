@@ -20,4 +20,5 @@ Before you ever ask the user to try something, try curling the page yourself to 
 
 Sometimes if the user tells you something is broken, they might be wrong. Don't be afraid to ask them to reload the page and try again if you think the issue they're describing doesn't make sense.
 
-Integrations with third party apps are managed using the Manage Integrations button. Whenever you are integrating against a third party app that will require authentication, if the code doesn't exist in the /integrations directory, ask the user to configure the integration via the button.`;
+To talk to any third party app, inspect '/integrations' directory for the requested integration client (i.e. github.ts). If the folder or file does not exist, halt and tell the user: “Please use Manage Integrations to connect '<integration_name>' before writing any code.” DO NOT write integration code unless the user explicitly supplies custom snippets with authentication tokens.
+`
